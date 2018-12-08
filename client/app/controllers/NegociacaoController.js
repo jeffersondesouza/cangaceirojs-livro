@@ -7,6 +7,10 @@ class NegociacaoController {
         this._inputValor = $('#valor');
 
         this._negociacoes = new Negociacoes();
+
+        this._negociacoesView = new NegociacoesView('#negociacoes');
+        // atualizando a view
+        this._negociacoesView.update(this._negociacoes);
     }
 
     adiciona(event) {
@@ -21,9 +25,8 @@ class NegociacaoController {
     addNegociacao(inputData, inputQuantidade, inputValor) {
         let negociacao = this.criarNegociacao(inputData, inputQuantidade, inputValor);
         this._negociacoes.adiciona(negociacao);
-        console.log('_negociacoes', this._negociacoes.paraArray());
-        this._negociacoes.paraArray().length = 0;        
-        console.log('_negociacoes', this._negociacoes.paraArray());
+        
+        this._negociacoesView.update(this._negociacoes);
 
     }
 

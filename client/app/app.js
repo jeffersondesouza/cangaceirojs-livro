@@ -1,4 +1,7 @@
-let negociacaoController = new NegociacaoController();
+(function () {
 
-document.querySelector('.form')
-    .addEventListener('submit', negociacaoController.adiciona.bind(negociacaoController));
+    let negociacaoController = new NegociacaoController();
+
+    document.querySelector('.form')
+        .addEventListener('submit', negociacaoController.adiciona.bind(negociacaoController));
+})();

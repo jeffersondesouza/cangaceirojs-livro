@@ -1,28 +1,42 @@
-var campos = [
+let n1 = new Negociacao(new Date(), 10, 20);
+
+console.log('quantidade: ', n1.quantidade);
+console.log('valor: ', n1.valor);
+console.log('data: ', n1.data);
+
+n1._quantidade = 10000;
+console.log(n1.quantidade);
+
+
+
+
+
+
+
+
+/*  */
+let campos = [
     document.querySelector('#data'),
     document.querySelector('#valor'),
     document.querySelector('#quantidade')
 ];
 
-var tbody = document.querySelector('table tbody');
-
-console.log('campos', campos);
-console.log('tbody', tbody);
+let tbody = document.querySelector('table tbody');
 
 
 document.querySelector('.form').addEventListener('submit', function (event) {
     event.preventDefault();
 
-    var tr = document.createElement('tr');
+    let tr = document.createElement('tr');
 
     campos.forEach(function (campo) {
-        var td = document.createElement('td');
+        let td = document.createElement('td');
         td.textContent = campo.value;
         tr.appendChild(td);
     });
 
 
-    var tdVolume = document.createElement('td');
+    let tdVolume = document.createElement('td');
 
     tdVolume.textContent = campos[1].value * campos[2].value;
 

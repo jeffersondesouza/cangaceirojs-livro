@@ -7,6 +7,17 @@ class NegociacaoController {
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
 
+        this._negociacoes = new Bind(
+            new Negociacoes(),
+            new NegociacoesView('#negociacoes'),
+            ['adiciona', 'esvazia']
+        );
+
+        this._mensagem = new Bind(
+            new Mensagem(),
+            new MensagemView('#mensagemView'),
+            ['texto']
+        );
     }
 
 
@@ -16,22 +27,19 @@ class NegociacaoController {
 
         this.addNegociacao(this._inputData, this._inputQuantidade, this._inputValor);
         this.limpaFormulario(this._inputData, this._inputQuantidade, this._inputValor);
-        this._mensagem = new Mensagem();
         this._mensagem.texto = 'Negociação adiconada com Sucesso!!!';
 
-        this._mensagemView = new MensagemView('#mensagemView');
-        this._mensagemView.update(this._mensagem);
-    }
-
-    esvazia(event) {
-        this._negociacoes.esvazia();
     }
 
     addNegociacao(inputData, inputQuantidade, inputValor) {
         let negociacao = this.criarNegociacao(inputData, inputQuantidade, inputValor);
         this._negociacoes.adiciona(negociacao);
-
     }
+
+    esvazia() {
+        this._negociacoes.esvazia();
+    }
+
 
     limpaFormulario(inputData, inputQuantidade, inputValor) {
         inputData.value = '';

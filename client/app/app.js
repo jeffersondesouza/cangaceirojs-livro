@@ -1,12 +1,18 @@
 (function () {
 
+    const $ = document.querySelector.bind(document);
+
     let negociacaoController = new NegociacaoController();
 
-    document.querySelector('.form')
+    $('.form')
         .addEventListener('submit', negociacaoController.adiciona.bind(negociacaoController));
 
-    document
-        .querySelector('#botao-apaga')
+    $('#botao-apaga')
         .addEventListener('click', negociacaoController.esvazia.bind(negociacaoController));
+
+    $('#botao-importa')
+        .addEventListener('click', negociacaoController.importaNegociacoes.bind(negociacaoController));
+
+    
 })();
 

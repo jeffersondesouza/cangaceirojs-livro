@@ -18,6 +18,8 @@ class NegociacaoController {
             new MensagemView('#mensagemView'),
             'texto'
         );
+
+        this._service = new NegociacaoService();
     }
 
 
@@ -55,5 +57,18 @@ class NegociacaoController {
             parseFloat(inputValor.value)
         );
 
+    }
+
+    importaNegociacoes() {
+        // obterNegociacoesDaSemanaAnterior
+
+        this._service.obterNegociacoesDoPerildo()
+            .then(negociacoes => {
+                console.log('negociacoes', negociacoes);
+                negociacoes
+                    .forEach(negociacao => this._negociacoes.adiciona(negociacao));
+                this._mensagem.texto = 'Negociações importadas com sucesso';
+            })
+            .catch(error => this._mensagem.texto = error);
     }
 }

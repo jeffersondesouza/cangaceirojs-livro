@@ -1,23 +1,32 @@
-class DateConverter {
+System.register([], function (_export, _context) {
+    "use strict";
 
-    constructor() {
-        throw new Error('Esta classe não pode ser instanciada');
-    }
+    return {
+        setters: [],
+        execute: function () {
+            class DateConverter {
 
-    static paraTexto(data) {
-        return data.toLocaleDateString();
-    }
+                constructor() {
+                    throw new Error('Esta classe não pode ser instanciada');
+                }
 
-    static paraData(texto) {
-    console.log('texto', texto);
+                static paraTexto(data) {
+                    return data.toLocaleDateString();
+                }
 
-        if (!/^\d{4}-\d{2}-\d{2}/.test(texto)) {
-            throw new Error('A data nao egue o padrão correto');
+                static paraData(texto) {
+                    console.log('texto', texto);
 
+                    if (!/^\d{4}-\d{2}-\d{2}/.test(texto)) {
+                        throw new Error('A data nao egue o padrão correto');
+                    }
+
+                    return new Date(...texto.split('-').map((item, indice) => item - indice % 2));
+                }
+            }
+
+            _export('DateConverter', DateConverter);
         }
-
-        return new Date(...texto.split('-')
-            .map((item, indice) =>
-                item - indice % 2));
-    }
-}
+    };
+});
+//# sourceMappingURL=DateConverter.js.map

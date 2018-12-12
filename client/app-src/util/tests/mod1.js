@@ -1,0 +1,1 @@
+const mod1Var = 'mod 1 var'

@@ -1,18 +1,23 @@
-(function () {
+System.register(['./controllers/NegociacaoController.js'], function (_export, _context) {
+    "use strict";
 
-    const $ = document.querySelector.bind(document);
+    var NegociacaoController;
+    return {
+        setters: [function (_controllersNegociacaoControllerJs) {
+            NegociacaoController = _controllersNegociacaoControllerJs.NegociacaoController;
+        }],
+        execute: function () {
 
-    let negociacaoController = new NegociacaoController();
+            const $ = document.querySelector.bind(document);
 
-    $('.form')
-        .addEventListener('submit', negociacaoController.adiciona.bind(negociacaoController));
+            let negociacaoController = new NegociacaoController();
 
-    $('#botao-apaga')
-        .addEventListener('click', negociacaoController.apaga.bind(negociacaoController));
+            $('.form').addEventListener('submit', negociacaoController.adiciona.bind(negociacaoController));
 
-    $('#botao-importa')
-        .addEventListener('click', negociacaoController.importaNegociacoes.bind(negociacaoController));
+            $('#botao-apaga').addEventListener('click', negociacaoController.apaga.bind(negociacaoController));
 
-    
-})();
-
+            $('#botao-importa').addEventListener('click', negociacaoController.importaNegociacoes.bind(negociacaoController));
+        }
+    };
+});
+//# sourceMappingURL=app.js.map

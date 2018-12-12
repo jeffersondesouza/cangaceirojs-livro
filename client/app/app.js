@@ -8,7 +8,7 @@
         .addEventListener('submit', negociacaoController.adiciona.bind(negociacaoController));
 
     $('#botao-apaga')
-        .addEventListener('click', negociacaoController.esvazia.bind(negociacaoController));
+        .addEventListener('click', negociacaoController.apaga.bind(negociacaoController));
 
     $('#botao-importa')
         .addEventListener('click', negociacaoController.importaNegociacoes.bind(negociacaoController));

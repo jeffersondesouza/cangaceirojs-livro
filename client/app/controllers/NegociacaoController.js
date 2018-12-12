@@ -20,22 +20,44 @@ class NegociacaoController {
         );
 
         this._service = new NegociacaoService();
+
+
+        this._init();
+
+    }
+
+    _init() {
+        getNegociacaoDao()
+            .then(dao => dao.listaTodos())
+            .then(negociacoes =>
+                negociacoes.forEach(negociacao =>
+                    this._negociacoes.adiciona(negociacao)))
+            .catch(err => this._mensagem.texto = err);
     }
 
 
     adiciona(event) {
         // cancelando a submissão do formulário
+
         event.preventDefault();
+        try {
 
-        this.addNegociacao(this._inputData, this._inputQuantidade, this._inputValor);
-        this.limpaFormulario(this._inputData, this._inputQuantidade, this._inputValor);
-        this._mensagem.texto = 'Negociação adiconada com Sucesso!!!';
+            let negociacao = this.criarNegociacao(this._inputData, this._inputQuantidade, this._inputValor);
 
-    }
 
-    addNegociacao(inputData, inputQuantidade, inputValor) {
-        let negociacao = this.criarNegociacao(inputData, inputQuantidade, inputValor);
-        this._negociacoes.adiciona(negociacao);
+            getNegociacaoDao()
+                .then(dao => dao.adiciona(negociacao))
+                .then(() => {
+                    console.log('adiciona');
+                    this._negociacoes.adiciona(negociacao);
+                    this._mensagem.texto = 'Negociação adiconada com Sucesso!!!';
+                    this.limpaFormulario(this._inputData, this._inputQuantidade, this._inputValor);
+                })
+                .catch(err => this._mensagem.texto = err);;
+        } catch (err) {
+            console.log('err', err);
+
+        }
     }
 
     esvazia() {
@@ -70,5 +92,16 @@ class NegociacaoController {
                 this._mensagem.texto = 'Negociações importadas com sucesso';
             })
             .catch(error => this._mensagem.texto = error);
+    }
+
+
+    apaga() {
+        getNegociacaoDao()
+            .then(dao => dao.apagaTodos())
+            .then(() => {
+                this._negociacoes.esvazia();
+                this._mensagem.texto = 'Negociações apagadas com sucesso';
+            })
+            .catch(err => this._mensagem.texto = err);
     }
 }

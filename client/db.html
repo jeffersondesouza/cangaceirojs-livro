@@ -11,6 +11,9 @@
 <body>
     INdex DB
 
+    <script src="app/util/DaoFactory.js"></script>
+    <script src="app/domain/negociacao/NegociacaoDao.js"></script>
+    <script src="app/util/ConnectionFactory.js"></script>
     <script src="./app/domain/negociacao/Negociacao.js"></script>
 
     <script>
@@ -46,41 +49,18 @@
 
         function adiciona() {
             const negociacao = new Negociacao(new Date(), 200, 1);
-            // ENCADEOU AS CHAMADAS
-            const request = connection
-                .transaction(['negociacoes'], 'readwrite')
-                .objectStore('negociacoes')
-                .add(negociacao);
-            // REMOVEU BLOCO
-            request.onsuccess = e =>
-                console.log('negociação salva com sucesso');
-            // REMOVEU BLOCO
-            request.onerror = e =>
-                console.log('Não foi possível savar a negociação');
+
+            DaoFactory.getNegociacaoDao()
+                .then(dao => dao.adiciona(negociacao))
+                .then(() => console.log('Negociação salva com sucesso!'))
+                .catch(err => console.log(err));
         }
 
         function listaNegociacoes() {
-            const cursor = connection
-                .transaction(['negociacoes'], 'readwrite')
-                .objectStore('negociacoes')
-                .openCursor();
-
-
-            cursor.onsuccess = e => {
-                const atual = e.target.result;
-                if (atual) {
-                    negociacoes.push(atual)
-                    atual.continue();
-                } else {
-                    console.log(negociacoes);
-
-                }
-
-            }
-
-            cursor.onerror = e => {
-
-            }
+            DaoFactory.getNegociacaoDao()
+                .then(dao => dao.listaTodos())
+                .then(negociacoes => console.log(negociacoes))
+                .catch(err => console.log(err));
 
         }
 

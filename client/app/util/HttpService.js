@@ -4,32 +4,22 @@ System.register([], function (_export, _context) {
     return {
         setters: [],
         execute: function () {
-            class HttpService {
+            let HttpService = class HttpService {
+
+                _handleErrors(res) {
+                    // se não estiver ok, lança a exceção
+                    if (!res.ok) throw new Error(res.statusText);
+                    return res;
+                }
 
                 get(url) {
 
-                    return new Promise((resolve, reject) => {
-
-                        const http = new XMLHttpRequest();
-
-                        http.open('GET', url);
-
-                        http.onreadystatechange = () => {
-                            if (http.readyState == 4) {
-                                if (http.status == 200) {
-                                    resolve(JSON.parse(http.responseText));
-                                } else {
-                                    reject(http.responseText);
-                                }
-                            }
-                        };
-                        http.send();
-                    });
+                    return fetch(url).then(res => this._handleErrors(res)).then(res => res.json());
                 }
 
-            }
+            };
 
-            _export('HttpService', HttpService);
+            _export("HttpService", HttpService);
         }
     };
 });

@@ -37,20 +37,23 @@ export class NegociacaoService {
     }
 
 
-    obterNegociacoesDoPerildo() {
-        return Promise.all([
-            this.obterNegociacoesDaSemana(),
-            this.obterNegociacoesDaSemanaAnterior(),
-            this.obterNegociacoesDaSemanaRetrasada(),
-        ])
-            .then(semanasList => semanasList
-                .reduce((t, a) => [...t, ...a], [])
+    async obterNegociacoesDoPerildo() {
+
+        try {
+            const periodo = await Promise.all([
+                this.obterNegociacoesDaSemana(),
+                this.obterNegociacoesDaSemanaAnterior(),
+                this.obterNegociacoesDaSemanaRetrasada(),
+            ]);
+
+            return periodo.reduce((t, a) => [...t, ...a], [])
                 .sort((a, b) => a.data.getTime() - b.data.getTime())
-            )
-            .catch(err => {
-                console.log(err);
-                throw new Error('Não foi possível obter as negociações do período')
-            });
+
+        } catch (error) {
+            console.log(err);
+            throw new Error('Não foi possível obter as negociações do período')
+        }
+
     }
 
 }

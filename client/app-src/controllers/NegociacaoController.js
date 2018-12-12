@@ -33,52 +33,40 @@ export class NegociacaoController {
 
     }
 
-    _init() {
+    async _init() {
+        try {
 
-        /* 
-                try {
-                    
-                     const dao = getNegociacaoDao();
-        
-                    const negociacoes = dao.listaTodos()
-        
-                    negociacoes.forEach(negociacao => this._negociacoes.adiciona(negociacao));
-        
-        
-                } catch (err) {
-                    this._mensagem.texto = err
-                } */
-        getNegociacaoDao()
-            .then(dao => dao.listaTodos())
-            .then(negociacoes =>
-                negociacoes.forEach(negociacao =>
-                    this._negociacoes.adiciona(negociacao)))
-            .catch(err => this._mensagem.texto = err);
+            const dao = await getNegociacaoDao();
+            const negociacoes = await dao.listaTodos()
+
+            negociacoes.forEach(negociacao => this._negociacoes.adiciona(negociacao));
+
+
+        } catch (err) {
+            this._mensagem.texto = err
+        }
 
 
     }
 
 
-    adiciona(event) {
+    async adiciona(event) {
         // cancelando a submissão do formulário
 
-        event.preventDefault();
         try {
+            event.preventDefault();
+            const negociacao = this.criarNegociacao(this._inputData, this._inputQuantidade, this._inputValor);
 
-            let negociacao = this.criarNegociacao(this._inputData, this._inputQuantidade, this._inputValor);
+            const dao = await getNegociacaoDao();
+            await dao.adiciona(negociacao);
 
+            this._negociacoes.adiciona(negociacao);
+            this._mensagem.texto = 'Negociação adiconada com Sucesso!!!';
+            this.limpaFormulario();
 
-            getNegociacaoDao()
-                .then(dao => dao.adiciona(negociacao))
-                .then(() => {
-                    console.log('adiciona');
-                    this._negociacoes.adiciona(negociacao);
-                    this._mensagem.texto = 'Negociação adiconada com Sucesso!!!';
-                    this.limpaFormulario(this._inputData, this._inputQuantidade, this._inputValor);
-                })
-                .catch(err => this._mensagem.texto = err);;
         } catch (err) {
             console.log('err', err);
+            this._mensagem.texto = err
 
         }
     }
@@ -88,11 +76,7 @@ export class NegociacaoController {
     }
 
 
-    limpaFormulario(inputData, inputQuantidade, inputValor) {
-        inputData.value = '';
-        inputQuantidade.value = 1
-        inputValor.value = 0.0;
-    }
+
 
 
     criarNegociacao(inputData, inputQuantidade, inputValor) {
@@ -104,27 +88,41 @@ export class NegociacaoController {
 
     }
 
-    importaNegociacoes() {
+    async importaNegociacoes() {
         // obterNegociacoesDaSemanaAnterior
+        try {
 
-        this._service.obterNegociacoesDoPerildo()
-            .then(negociacoes => {
-                console.log('negociacoes', negociacoes);
-                negociacoes
-                    .forEach(negociacao => this._negociacoes.adiciona(negociacao));
-                this._mensagem.texto = 'Negociações importadas com sucesso';
-            })
-            .catch(error => this._mensagem.texto = error);
+            const negociacoes = await this._service.obterNegociacoesDoPerildo();
+
+            negociacoes.forEach(negociacao => this._negociacoes.adiciona(negociacao));
+
+            this._mensagem.texto = 'Negociações importadas com sucesso';
+
+        } catch (err) {
+            this._mensagem.texto = err;
+        }
+
     }
 
 
-    apaga() {
-        getNegociacaoDao()
-            .then(dao => dao.apagaTodos())
-            .then(() => {
-                this._negociacoes.esvazia();
-                this._mensagem.texto = 'Negociações apagadas com sucesso';
-            })
-            .catch(err => this._mensagem.texto = err);
+    async apaga() {
+        try {
+            const dao = await getNegociacaoDao()
+            await dao.apagaTodos();
+            this._negociacoes.esvazia();
+            this._mensagem.texto = 'Negociações apagadas com sucesso';
+
+        } catch (err) {
+            this._mensagem.texto = err
+        }
+
+    }
+
+    /*  */
+
+    limpaFormulario() {
+        this._inputData.value = '';
+        this._inputQuantidade.value = 1
+        this._inputValor.value = 0.0;
     }
 }

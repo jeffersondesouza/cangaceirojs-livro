@@ -9,11 +9,9 @@ System.register([], function (_export, _context) {
 
                     return new Proxy(objeto, {
                         get(target, prop, receiver) {
-                            console.log('target[prop]; ', target[prop]);
 
                             if (typeof target[prop] == typeof Function && props.includes(prop)) {
                                 return function () {
-                                    console.log('Disparou a  callback');
 
                                     target[prop].apply(target, arguments);
                                     callback(target);
@@ -34,7 +32,7 @@ System.register([], function (_export, _context) {
                 }
             }
 
-            _export('ProxyFactory', ProxyFactory);
+            _export("ProxyFactory", ProxyFactory);
         }
     };
 });

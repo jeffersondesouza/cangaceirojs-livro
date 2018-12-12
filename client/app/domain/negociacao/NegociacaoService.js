@@ -2,6 +2,36 @@ System.register(['../../util/HttpService.js', './Negociacao.js'], function (_exp
     "use strict";
 
     var HttpService, Negociacao;
+
+    function _asyncToGenerator(fn) {
+        return function () {
+            var gen = fn.apply(this, arguments);
+            return new Promise(function (resolve, reject) {
+                function step(key, arg) {
+                    try {
+                        var info = gen[key](arg);
+                        var value = info.value;
+                    } catch (error) {
+                        reject(error);
+                        return;
+                    }
+
+                    if (info.done) {
+                        resolve(value);
+                    } else {
+                        return Promise.resolve(value).then(function (value) {
+                            step("next", value);
+                        }, function (err) {
+                            step("throw", err);
+                        });
+                    }
+                }
+
+                return step("next");
+            });
+        };
+    }
+
     return {
         setters: [function (_utilHttpServiceJs) {
             HttpService = _utilHttpServiceJs.HttpService;
@@ -34,10 +64,23 @@ System.register(['../../util/HttpService.js', './Negociacao.js'], function (_exp
                 }
 
                 obterNegociacoesDoPerildo() {
-                    return Promise.all([this.obterNegociacoesDaSemana(), this.obterNegociacoesDaSemanaAnterior(), this.obterNegociacoesDaSemanaRetrasada()]).then(semanasList => semanasList.reduce((t, a) => [...t, ...a], []).sort((a, b) => a.data.getTime() - b.data.getTime())).catch(err => {
-                        console.log(err);
-                        throw new Error('Não foi possível obter as negociações do período');
-                    });
+                    var _this = this;
+
+                    return _asyncToGenerator(function* () {
+
+                        try {
+                            const periodo = yield Promise.all([_this.obterNegociacoesDaSemana(), _this.obterNegociacoesDaSemanaAnterior(), _this.obterNegociacoesDaSemanaRetrasada()]);
+
+                            return periodo.reduce(function (t, a) {
+                                return [...t, ...a];
+                            }, []).sort(function (a, b) {
+                                return a.data.getTime() - b.data.getTime();
+                            });
+                        } catch (error) {
+                            console.log(err);
+                            throw new Error('Não foi possível obter as negociações do período');
+                        }
+                    })();
                 }
 
             }

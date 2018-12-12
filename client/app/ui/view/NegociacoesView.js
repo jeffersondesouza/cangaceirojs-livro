@@ -12,6 +12,7 @@ System.register(['./View.js', '../converters/DateConverter.js'], function (_expo
             class NegociacoesView extends View {
 
                 template(model) {
+
                     return `
             <table class="table table-hover table-bordered">
                 <thead>
@@ -32,7 +33,7 @@ System.register(['./View.js', '../converters/DateConverter.js'], function (_expo
                                 <td>${negociacao.volume}</td>
                             </tr>
                     `;
-                    }).join(',')}
+                    }).join('')}
                 </tbody>
                 <tfoot>
                     <tr>

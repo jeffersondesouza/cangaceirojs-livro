@@ -1,3 +1,5 @@
+export * from './decorators/Controller.js';
+export * from './decorators/Debounce.js';
 export * from './Bind.js';
 export * from './ConnectionFactory.js';
 export * from './DaoFactory.js';

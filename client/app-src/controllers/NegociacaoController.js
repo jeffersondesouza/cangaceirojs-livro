@@ -3,16 +3,17 @@ import { Negociacoes, NegociacaoService, Negociacao } from '../domain/index.js';
 
 import { NegociacoesView, Mensagem, MensagemView, DateConverter } from '../ui/index.js';
 
-import { Bind, getNegociacaoDao } from '../util/index.js';
+import { Bind, getNegociacaoDao, debounce, controller } from '../util/index.js';
 
+@controller('#data', '#quantidade', '#valor')
 export class NegociacaoController {
 
-    constructor() {
+    constructor(inputData, inputQuantidade, inputValor) {
         let $ = document.querySelector.bind(document);
 
-        this._inputData = $('#data');
-        this._inputQuantidade = $('#quantidade');
-        this._inputValor = $('#valor');
+        this._inputData = inputData;
+        this._inputQuantidade = inputQuantidade;
+        this._inputValor = inputValor;
 
         this._negociacoes = new Bind(
             new Negociacoes(),
@@ -50,6 +51,7 @@ export class NegociacaoController {
     }
 
 
+    @debounce()
     async adiciona(event) {
         // cancelando a submissão do formulário
 
@@ -88,6 +90,7 @@ export class NegociacaoController {
 
     }
 
+    @debounce(1500)
     async importaNegociacoes() {
         // obterNegociacoesDaSemanaAnterior
         try {

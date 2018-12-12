@@ -1,3 +1,9 @@
+
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
+
+import '../css/meucss.css'
+
 import { NegociacaoController } from './controllers/NegociacaoController.js';
 
 const $ = document.querySelector.bind(document);

@@ -1,16 +1,10 @@
-import { Bind } from '../util/Bind.js';
-import { Negociacoes } from '../domain/negociacao/Negociacoes.js';
-import { NegociacoesView } from '../ui/view/NegociacoesView.js';
-import { Mensagem } from '../ui/models/Mensagem.js';
-import { MensagemView } from '../ui/view/MensagemView.js';
-import { NegociacaoService } from '../domain/negociacao/NegociacaoService.js';
-import { getNegociacaoDao } from '../util/DaoFactory.js';
 
-import { Negociacao } from '../domain/negociacao/Negociacao.js';
-import { DateConverter } from '../ui/converters/DateConverter.js';
+import { Negociacoes, NegociacaoService, Negociacao } from '../domain/index.js';
 
-/*
- */
+import { NegociacoesView, Mensagem, MensagemView, DateConverter } from '../ui/index.js';
+
+import { Bind, getNegociacaoDao } from '../util/index.js';
+
 export class NegociacaoController {
 
     constructor() {
@@ -40,12 +34,28 @@ export class NegociacaoController {
     }
 
     _init() {
+
+        /* 
+                try {
+                    
+                     const dao = getNegociacaoDao();
+        
+                    const negociacoes = dao.listaTodos()
+        
+                    negociacoes.forEach(negociacao => this._negociacoes.adiciona(negociacao));
+        
+        
+                } catch (err) {
+                    this._mensagem.texto = err
+                } */
         getNegociacaoDao()
             .then(dao => dao.listaTodos())
             .then(negociacoes =>
                 negociacoes.forEach(negociacao =>
                     this._negociacoes.adiciona(negociacao)))
             .catch(err => this._mensagem.texto = err);
+
+
     }
 
 

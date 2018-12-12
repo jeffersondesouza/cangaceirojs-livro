@@ -1,3 +1,4 @@
+import {Negociacao } from './Negociacao.js';
 
 export class NegociacaoDao {
     constructor(connection) {

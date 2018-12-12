@@ -1,8 +1,11 @@
-System.register([], function (_export, _context) {
+System.register(['./Negociacao.js'], function (_export, _context) {
     "use strict";
 
+    var Negociacao;
     return {
-        setters: [],
+        setters: [function (_NegociacaoJs) {
+            Negociacao = _NegociacaoJs.Negociacao;
+        }],
         execute: function () {
             class NegociacaoDao {
                 constructor(connection) {

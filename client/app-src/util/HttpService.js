@@ -9,7 +9,7 @@ export class HttpService {
 
     get(url) {
 
-        return fetch(url)
+        return fetch(`${SERVICE_URL}/${url}`)
             .then(res => this._handleErrors(res))
             .then(res => res.json())
     }

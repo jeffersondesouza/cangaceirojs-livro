@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 
 import '../css/meucss.css'
 
-import { NegociacaoController } from './controllers/NegociacaoController.js';
+import { NegociacaoController } from './controllers/NegociacaoController';
 
 const $ = document.querySelector.bind(document);
 

@@ -1,5 +1,5 @@
-import { HttpService } from '../../util/HttpService.js';
-import { Negociacao } from './Negociacao.js';
+import { HttpService } from '../../util/HttpService';
+import { Negociacao } from './Negociacao';
 
 
 export class NegociacaoService {
@@ -9,8 +9,9 @@ export class NegociacaoService {
     }
 
     obterNegociacoesDaSemana() {
+
         return new HttpService()
-            .get('http://localhost:3000/negociacoes/semana')
+            .get('negociacoes/semana')
             .then(negociacoes => negociacoes
                 .map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor))
             )
@@ -19,7 +20,7 @@ export class NegociacaoService {
 
     obterNegociacoesDaSemanaAnterior() {
         return new HttpService()
-            .get('http://localhost:3000/negociacoes/anterior')
+            .get('negociacoes/anterior')
             .then(negociacoes => negociacoes
                 .map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor))
             )
@@ -29,7 +30,7 @@ export class NegociacaoService {
 
     obterNegociacoesDaSemanaRetrasada() {
         return new HttpService()
-            .get('http://localhost:3000/negociacoes/retrasada')
+            .get('negociacoes/retrasada')
             .then(negociacoes => negociacoes
                 .map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor))
             )

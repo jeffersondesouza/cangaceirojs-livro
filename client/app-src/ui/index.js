@@ -1,3 +1,3 @@
-export * from './converters/DateConverter.js';
-export * from './models/Mensagem.js';
-export * from './view/index.js';
+export * from './converters/DateConverter';
+export * from './models/Mensagem';
+export * from './view';

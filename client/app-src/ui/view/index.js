@@ -1,2 +1,2 @@
-export * from './MensagemView.js';
-export * from './NegociacoesView.js';
+export * from './MensagemView';
+export * from './NegociacoesView';
